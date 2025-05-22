@@ -1,3 +1,13 @@
-# Local Netlify folder
-.netlify
+# API Keys & Sensitive Info
 config.js
+
+# IDE & Editor folders
+.vscode/
+
+# Dependencies
+node_modules/
+
+# Build & distribution
+dist/
+build/
+.netlify/

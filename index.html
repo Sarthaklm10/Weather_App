@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -14,17 +15,15 @@
         href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
 
-    <title>
-        Weather
-    </title>
-
+    <title>Weather App</title>
 </head>
 
 <body>
-    <div class="layer">
-    </div>
+    <div class="layer"></div>
 
     <div class="card">
+        <button class="unit-toggle" id="unit-toggle">°C / °F</button>
+        <div class="search-prompt">Search for your city's weather</div>
         <div class="search">
             <input 
                 type="text" 
@@ -34,7 +33,6 @@
                 name="search-input" 
                 autocomplete="off"
                 required />
-
             <button id="search-button" title="Search">
                 <svg 
                     stroke="currentColor" 
@@ -51,14 +49,20 @@
             </button>
         </div>
 
+        <button class="location-button" id="location-button">
+            <i class="fas fa-location-dot"></i> Use Current Location
+        </button>
+
+        <div class="loading-animation" id="loading-animation"></div>
+        <div class="error-message" id="error-message"></div>
+
         <div class="weather loading" id="weather-widget">
             <h2 class="city" id="city-name">
                 <br>
                 Enter city name to check weather
             </h2>
 
-            <h1 class="temp" id="temperature-display">
-            </h1>
+            <h1 class="temp" id="temperature-display"></h1>
 
             <div class="flex" id="icon-wrapper">
                 <img 
@@ -67,24 +71,48 @@
                     alt="weather icon" 
                     id="weather-icon" />
 
-                <div class="description" id="weather-description">
+                <div class="description" id="weather-description"></div>
+            </div>
+
+            <div class="weather-details">
+                <div class="weather-detail-item">
+                    <i class="fas fa-temperature-high"></i>
+                    <p>Feels Like</p>
+                    <div class="value" id="feels-like"></div>
+                </div>
+                <div class="weather-detail-item">
+                    <i class="fas fa-droplet"></i>
+                    <p>Humidity</p>
+                    <div class="value" id="humidity-info"></div>
+                </div>
+                <div class="weather-detail-item">
+                    <i class="fas fa-wind"></i>
+                    <p>Wind Speed</p>
+                    <div class="value" id="wind-info"></div>
+                </div>
+                <div class="weather-detail-item">
+                    <i class="fas fa-compress"></i>
+                    <p>Pressure</p>
+                    <div class="value" id="pressure-info"></div>
                 </div>
             </div>
 
-            <div class="humidity" id="humidity-info">
-            </div>
-
-            <div class="wind" id="wind-info">
+            <div class="air-quality" id="air-quality">
+                <h3>Air Quality Index</h3>
+                <div class="air-quality-indicator">
+                    <div class="air-quality-bar">
+                        <div class="air-quality-level" id="air-quality-level"></div>
+                    </div>
+                    <span class="air-quality-text" id="air-quality-text"></span>
+                </div>
             </div>
         </div>        
         
-        <div class="forecast"> </div>
+        <div class="forecast"></div>
     </div>
     
-    
-    <script src="config.js" defer> </script>
-    <script src="script.js" defer> </script>
-
+    <script src="config.js" defer></script>
+    <script src="script.js" defer></script>
 </body>
 
 </html>
