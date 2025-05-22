@@ -10,7 +10,12 @@ let weather = {
 
         this.showLoading();
         const baseURL = "https://api.openweathermap.org/data/2.5/weather?";
-        const fullURL = baseURL + "q=" + cityName + "&units=metric&appid=" + CONFIG.API_KEY;
+        const apiKey = this.getApiKey();
+        if (!apiKey) {
+            this.showError("API key not found. Please check your configuration.");
+            return;
+        }
+        const fullURL = baseURL + "q=" + cityName + "&units=metric&appid=" + apiKey;
 
         fetch(fullURL)
             .then(response => {
@@ -39,7 +44,12 @@ let weather = {
     },
 
     fetchAirQuality: function (lat, lon) {
-        const aqiURL = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${CONFIG.API_KEY}`;
+        const apiKey = this.getApiKey();
+        if (!apiKey) {
+            console.error("API key not found");
+            return;
+        }
+        const aqiURL = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`;
 
         fetch(aqiURL)
             .then(response => response.json())
@@ -73,7 +83,6 @@ let weather = {
         setCardCompact(false);
         const cityName = data.name;
         const weatherIcon = data.weather[0].icon;
-        console.log(weatherIcon);
         const bodyElt = document.querySelector("body");
 
         switch (weatherIcon) {
@@ -162,7 +171,12 @@ let weather = {
     },
 
     fetchForecast: function (cityName) {
-        const url = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=metric&appid=${CONFIG.API_KEY}`;
+        const apiKey = this.getApiKey();
+        if (!apiKey) {
+            console.error("API key not found");
+            return;
+        }
+        const url = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=metric&appid=${apiKey}`;
 
         fetch(url)
             .then(response => response.json())
@@ -308,6 +322,10 @@ let weather = {
             this.fetchWeather(searchInput);
             this.fetchForecast(searchInput);
         }
+    },
+
+    getApiKey: function () {
+        return '9b7c759da968a70964d50985292991e8';
     }
 };
 
