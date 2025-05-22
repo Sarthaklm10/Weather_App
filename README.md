@@ -2,6 +2,10 @@
 
 A weather application that shows current weather conditions, forecast, and air quality data for any city. The app features a responsive design with dynamic backgrounds that change based on weather conditions.
 
+## 🌐 Live 
+Check out the live application:[https://sarthaklm10.github.io/Weather_App/](https://sarthaklm10.github.io/Weather_App/)
+
+
 ## Screenshots
 
 <div style="display: flex; gap: 20px; flex-wrap: wrap;">
