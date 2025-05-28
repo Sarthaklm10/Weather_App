@@ -84,54 +84,68 @@ let weather = {
         const cityName = data.name;
         const weatherIcon = data.weather[0].icon;
         const bodyElt = document.querySelector("body");
-
-        switch (weatherIcon) {
-            case "01d": // clear sky - day
-                bodyElt.style.backgroundImage = "url('https://images.unsplash.com/photo-1501630834273-4b5604d2ee31?q=80&w=2070')";
-                break;
-            case "01n": // clear sky - night
-                bodyElt.style.backgroundImage = "url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071')";
-                break;
-            case "02d": // few clouds - day
-                bodyElt.style.backgroundImage = "url('https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?q=80&w=2065')";
-                break;
-            case "02n": // few clouds - night
-                bodyElt.style.backgroundImage = "url('https://images.unsplash.com/photo-1534274867514-d5b47ef89ed7?q=80&w=2070')";
-                break;
-            case "03d": // scattered clouds - day
-            case "03n": // scattered clouds - night
-                bodyElt.style.backgroundImage = "url('https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=2070')";
-                break;
-            case "04d": // broken clouds - day
-            case "04n": // broken clouds - night
-                bodyElt.style.backgroundImage = "url('https://images.unsplash.com/photo-1501630834273-4b5604d2ee31?q=80&w=2070')";
-                break;
-            case "09d": // shower rain - day
-            case "09n": // shower rain - night
-                bodyElt.style.backgroundImage = "url('https://images.unsplash.com/photo-1501691223387-dd0506c89ac8?q=80&w=2070')";
-                break;
-            case "10d": // rain - day
-            case "10n": // rain - night
-                bodyElt.style.backgroundImage = "url('https://images.unsplash.com/photo-1501691223387-dd0506c89ac8?q=80&w=2070')";
-                break;
-            case "11d": // thunderstorm - day
-            case "11n": // thunderstorm - night
-                bodyElt.style.backgroundImage = "url('https://images.unsplash.com/photo-1501691223387-dd0506c89ac8?q=80&w=2070')";
-                break;
-            case "13d": // snow - day
-            case "13n": // snow - night
-                bodyElt.style.backgroundImage = "url('https://images.unsplash.com/photo-1483664852095-d6cc6870702d?q=80&w=2070')";
-                break;
-            case "50d": // mist - day
-            case "50n": // mist - night
-                bodyElt.style.backgroundImage = "url('https://images.unsplash.com/photo-1501691223387-dd0506c89ac8?q=80&w=2070')";
-                break;
-            default:
-                bodyElt.style.backgroundImage = "url('https://images.unsplash.com/photo-1501630834273-4b5604d2ee31?q=80&w=2070')";
-                break;
-        }
-
         const weatherDescription = data.weather[0].description;
+
+        // Update page title with city and weather
+        document.title = `${cityName} Weather - ${weatherDescription}`;
+
+        // Add transition class for smooth change
+        bodyElt.classList.add('weather-changing');
+        
+        setTimeout(() => {
+            // Remove all weather-related classes first
+            bodyElt.classList.remove(
+                'weather-clear-day', 'weather-clear-night',
+                'weather-clouds-day', 'weather-clouds-night',
+                'weather-rain-day', 'weather-rain-night',
+                'weather-thunderstorm', 'weather-snow',
+                'weather-mist', 'weather-default', 'weather-changing'
+            );
+
+            // Add appropriate weather class based on condition
+            switch (weatherIcon) {
+                case "01d": // clear sky - day
+                    bodyElt.classList.add('weather-clear-day');
+                    break;
+                case "01n": // clear sky - night
+                    bodyElt.classList.add('weather-clear-night');
+                    break;
+                case "02d": // few clouds - day
+                case "03d": // scattered clouds - day
+                case "04d": // broken clouds - day
+                    bodyElt.classList.add('weather-clouds-day');
+                    break;
+                case "02n": // few clouds - night
+                case "03n": // scattered clouds - night
+                case "04n": // broken clouds - night
+                    bodyElt.classList.add('weather-clouds-night');
+                    break;
+                case "09d": // shower rain - day
+                case "10d": // rain - day
+                    bodyElt.classList.add('weather-rain-day');
+                    break;
+                case "09n": // shower rain - night
+                case "10n": // rain - night
+                    bodyElt.classList.add('weather-rain-night');
+                    break;
+                case "11d": // thunderstorm - day
+                case "11n": // thunderstorm - night
+                    bodyElt.classList.add('weather-thunderstorm');
+                    break;
+                case "13d": // snow - day
+                case "13n": // snow - night
+                    bodyElt.classList.add('weather-snow');
+                    break;
+                case "50d": // mist - day
+                case "50n": // mist - night
+                    bodyElt.classList.add('weather-mist');
+                    break;
+                default:
+                    bodyElt.classList.add('weather-default');
+                    break;
+            }
+        }, 100);
+
         const temperature = data.main.temp;
         const feelsLike = data.main.feels_like;
         const humidityLevel = data.main.humidity;
@@ -359,3 +373,6 @@ function setCardCompact(isCompact) {
 setCardCompact(true);
 document.querySelector(".weather").classList.add("loading");
 document.querySelector(".weather").classList.remove("visible");
+
+// Set default background
+document.querySelector("body").classList.add("weather-default");
